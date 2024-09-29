@@ -15,7 +15,7 @@ type App struct {
 	service *service.Service
 }
 
-func NewApp(config *config.Config) *App {
+func NewApp(config *config.Config)*App {
 	a := &App{
 		config: config,
 	}
@@ -26,13 +26,18 @@ func NewApp(config *config.Config) *App {
 		panic(err)
 	}
 
-	if a.router, err = router.NewRouter(config); err != nil {
-		panic(err)
-	}
-
 	if a.service, err = service.NewService(config); err != nil {
 		panic(err)
 	}
 
+	if a.router, err = router.NewRouter(config); err != nil {
+		panic(err)
+	}
+
 	return a
+
+}
+
+func (a *App) Run() error {
+	return a.router.Run()
 }
